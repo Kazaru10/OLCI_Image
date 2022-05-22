@@ -1,5 +1,5 @@
 classdef OLCI_band
-    %% classe de definition d une bande spectrale d un produit OLCI
+    % classe de definition d une bande spectrale d un produit OLCI
     % prend en entree un fihier .nc correspondant a une bande spectrale
     
     % exemple
