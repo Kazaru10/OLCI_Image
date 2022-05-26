@@ -178,12 +178,12 @@ classdef OLCIMG
           lat_4 = OLCI_object.geo_coordinates.latitude(end, end);
           
           % chargement image
-          img_mercator = imread('D:\OLCI\SCRIPT\mercator\Mercator-projection.jpg');
+          img_mercator = imread('Mercator-projection.jpg'); % Planisphere en projection mercator
           
           w = size(img_mercator, 2);
           h = size(img_mercator, 1);
           
-          % calcul projection marcator
+          % calcul projection mercator
           
           %pixel central
           x = w * (Lon + 180)/360;
