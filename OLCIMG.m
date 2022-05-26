@@ -158,8 +158,52 @@ classdef OLCIMG
        
        function mercator(OLCI_object)
           % projection mercator des coordonées geographiques du produit
-          figure()
-          plot([1 2 3 4 5])
+          
+          % recuperation localisation pipxel central
+          pixel_central = [round(size(OLCI_object.geo_coordinates.longitude,1)/2), round(size(OLCI_object.geo_coordinates.longitude,2)/2)];
+          
+          Lon = OLCI_object.geo_coordinates.longitude(pixel_central(1), pixel_central(2));
+          Lat = OLCI_object.geo_coordinates.latitude(pixel_central(1), pixel_central(2));
+          
+          
+          % coordonnées trace au sol
+          lon_1 = OLCI_object.geo_coordinates.longitude(1, 1);
+          lon_2 = OLCI_object.geo_coordinates.longitude(1, end);
+          lon_3 = OLCI_object.geo_coordinates.longitude(end, 1);
+          lon_4 = OLCI_object.geo_coordinates.longitude(end, end);
+          
+          lat_1 = OLCI_object.geo_coordinates.latitude(1, 1);
+          lat_2 = OLCI_object.geo_coordinates.latitude(1, end);
+          lat_3 = OLCI_object.geo_coordinates.latitude(end, 1);
+          lat_4 = OLCI_object.geo_coordinates.latitude(end, end);
+          
+          % chargement image
+          img_mercator = imread('D:\OLCI\SCRIPT\mercator\Mercator-projection.jpg');
+          
+          w = size(img_mercator, 2);
+          h = size(img_mercator, 1);
+          
+          % calcul projection marcator
+          
+          %pixel central
+          x = w * (Lon + 180)/360;
+          y = (h/2) - (w/(2*pi)) * log(tan(pi/4 + deg2rad(Lat)/2));
+          
+          %trace au sol
+          X_track = w * ([lon_1 lon_2 lon_4 lon_3 lon_1] + 180)/360;
+          Y_track = (h/2) - (w/(2*pi)) * log(tan(pi/4 + deg2rad([lat_1 lat_2 lat_4 lat_3 lat_1])/2));
+                    
+          % plot projection mercator
+          figure
+          hold on
+          image(img_mercator)
+          axis ij
+          axis equal
+          axis off
+          plot(x, y, 'r*')
+          plot(X_track, Y_track, 'r--')
+          title(OLCI_object.name)
+          hold off
           
        end
        
